@@ -41,7 +41,7 @@ export async function POST(req: Request) {
 
       response.cookies.set('token', token, {
         httpOnly: true,
-        secure: process.env.NODE_ENV !== 'development',
+        secure: false,
         sameSite: 'strict',
         maxAge: 30 * 24 * 60 * 60,
         path: '/',
@@ -53,7 +53,7 @@ export async function POST(req: Request) {
       // Mock successful registration for demonstration if DB is down
       const token = jwt.sign({ id: 'dummy_user_id', isAdmin: false }, process.env.JWT_SECRET || 'secret', { expiresIn: '30d' });
       const response = NextResponse.json({ _id: 'dummy_user_id', name, email, isAdmin: false }, { status: 201 });
-      response.cookies.set('token', token, { httpOnly: true, secure: process.env.NODE_ENV !== 'development', sameSite: 'strict', maxAge: 30 * 24 * 60 * 60, path: '/' });
+      response.cookies.set('token', token, { httpOnly: true, secure: false, sameSite: 'strict', maxAge: 30 * 24 * 60 * 60, path: '/' });
       return response;
     }
   } catch (error: any) {
